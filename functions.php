@@ -11,17 +11,27 @@
 class AG_PostListWidget extends WP_Widget
 {
   private $database;
+  private $originalExcerptLength = 55;
+
   function __construct()
   {
     global $wpdb;
     $this->database = $wpdb;
     parent::__construct(
       'AG_PostListWidget',
-      __('AG Network Posts', 'agnp_widget_domain'),
+      __('Multisite Posts', 'agnp_widget_domain'),
       array( 'description' => __( 'Display posts across the whole network.', 'agnp_widget_domain' ), )
     );
   }
 
+  /**
+   * Front-end display of widget.
+   *
+   * @see WP_Widget::widget()
+   *
+   * @param array $args     Widget arguments.
+   * @param array $instance Saved values from database.
+   */
   public function widget( $args, $instance )
   {
     $title = apply_filters( 'widget_title', $instance['title'] );
@@ -29,36 +39,148 @@ class AG_PostListWidget extends WP_Widget
     if ( ! empty( $title ) ) {
       echo $args['before_title'] . $title . $args['after_title'];
     }
-    $this->displayWidget();
+    $this->displayWidget($instance);
     echo $args['after_widget'];
   }
 
-  private function displayWidget()
+  /**
+   * Back-end widget form.
+   *
+   * @see WP_Widget::form()
+   *
+   * @param array $instance Previously saved values from database.
+   */
+  public function form( $instance )
   {
-    $blogs = $this->getBlogList();
-    $posts = array();
-    foreach($blogs as $blog) {
-      if ($blog->blog_id == 5) {
-        continue;
-      }
-      $tableName = "wp_" . $blog->blog_id. "_posts";
-      if ($blog->blog_id == 1) {
-        $tableName = "wp_posts";
-      }
-      if ($this->database->posts === $tableName) {
-        continue;
-      }
-      $query = "select *, '{$blog->blog_id}' as blog_id from {$tableName} where post_status = 'publish' and post_type = 'post' order by post_date desc limit 1;";
-      $post = $this->database->get_row($query);
-      $post->domain = $blog->domain;
-      $posts[$blog->blog_id] = $post;
+    if (isset($instance[ 'title' ])) {
+      $title = $instance['title'];
+    } else {
+      $title = __('Posts across our Network', 'agnp_widget_domain');
     }
+
+    if (isset($instance[ 'excerpt' ])) {
+      $excerpt = $instance['excerpt'];
+    } else {
+      $excerpt = 55;
+    }
+
+    if (isset($instance[ 'number_of_posts' ])) {
+      $number_of_posts = $instance['number_of_posts'];
+    } else {
+      $number_of_posts = 1;
+    }
+
+    if (isset($instance['blogs'])) {
+      $blogs = $instance['blogs'];
+    } else {
+      $blogs = $this->getBlogList();
+    }
+
+    if (isset($instance['fields'])) {
+      $fields = $instance['fields'];
+    } else {
+      $fields = $this->getFieldList();
+    }
+
+    require('template/form.html.php');
+  }
+
+  /**
+   * Sanitize widget form values as they are saved.
+   *
+   * @see WP_Widget::update()
+   *
+   * @param array $new_instance Values just sent to be saved.
+   * @param array $old_instance Previously saved values from database.
+   *
+   * @return array Updated safe values to be saved.
+   */
+  public function update( $new_instance, $old_instance ) {
+    $instance = array();
+    $instance['title'] = (!empty($new_instance['title']))
+      ? strip_tags($new_instance['title'])
+      : '';
+    $instance['excerpt'] = (!empty($new_instance['excerpt']))
+      ? (int)strip_tags($new_instance['excerpt'])
+      : 55;
+    $instance['number_of_posts'] = (!empty($new_instance['number_of_posts']))
+      ? (int)strip_tags($new_instance['number_of_posts'])
+      : 1;
+
+    if (isset($new_instance['blogs']) && is_array($new_instance['blogs'])) {
+      $blogs = $this->getBlogList();
+      foreach($blogs as $blog) {
+        $blog->selected = $new_instance['blogs'][$blog->blog_id];
+      }
+      $instance['blogs'] = $blogs;
+    }
+
+    if (isset($new_instance['fields']) && is_array($new_instance['fields'])) {
+      $fields = $this->getFieldList();
+      foreach($fields as $field) {
+        $field->selected = $new_instance['fields'][$field->id];
+      }
+      $instance['fields'] = $fields;
+    }
+
+    return $instance;
+  }
+
+  private function displayWidget($instance)
+  {
+    $options = $instance;
     require_once('template/widget.html.php');
+  }
+
+  private function getFieldList()
+  {
+    return array(
+      'title' => (object) array(
+        'id' => 'title',
+        'name' => 'Title',
+        'selected' => 1
+      ),
+      'content' => (object) array(
+        'id' => 'content',
+        'name' => 'Content',
+        'selected' => 1
+      ),
+      'featured_image' => (object) array(
+        'id' => 'featured_image',
+        'name' => 'Featured Image',
+        'selected' => 0
+      ),
+      'domain' => (object) array(
+        'id' => 'domain',
+        'name' => "Domain Name",
+        'selected' => 0
+      ),
+      'blogname' => (object) array(
+        'id' => 'blogname',
+        'name' => "Blog Name",
+        'selected' => 0
+      ),
+      'blogname_with_link' => (object) array(
+        'id' => 'blogname_with_link',
+        'name' => "Blog Name as Link",
+        'selected' => 0
+      ),
+      'author_name' => (object) array(
+        'id' => 'author_name',
+        'name' => "Author's Name",
+        'selected' => 0
+      ),
+      'published_at' => (object) array(
+        'id' => 'published_at',
+        'name' => "Published At",
+        'selected' => 0
+      )
+    );
   }
 
   private function getBlogList()
   {
-    $results = $this->database->get_results('select * from wp_blogs;');
+    $results = $this->database->get_results('select blog_id, domain, 1 as selected from wp_blogs;');
     return $results;
   }
 }
