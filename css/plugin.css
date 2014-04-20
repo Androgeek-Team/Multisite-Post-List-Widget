@@ -1,0 +1,12 @@
+.agnp-line {
+  padding: 10px 0;
+}
+
+.agnp-line h2 {
+  padding-bottom: 5px;
+}
+
+.agnp-line .domain {
+  font-size: .9em;
+  font-style: italic;
+}

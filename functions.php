@@ -22,6 +22,13 @@ class AG_PostListWidget extends WP_Widget
       __('Multisite Posts', 'agnp_widget_domain'),
       array( 'description' => __( 'Display posts across the whole network.', 'agnp_widget_domain' ), )
     );
+    add_action( 'wp_enqueue_scripts', array( $this, 'register_plugin_styles' ) );
+  }
+
+  public function register_plugin_styles()
+  {
+    wp_register_style('multisite-post-list', plugins_url('multisite-post-list/css/plugin.css'));
+    wp_enqueue_style('multisite-post-list');
   }
 
   /**

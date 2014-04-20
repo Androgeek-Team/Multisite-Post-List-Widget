@@ -20,25 +20,25 @@ foreach($options['blogs'] as $blog):
     setup_postdata($post);
 ?>
   <div class="agnp-line">
-    <?php if ($options['fields']['domain']): ?>
+    <?php if ($options['fields']['title']->selected): ?>
       <h2><a href="<?php the_permalink()?>" target="_blank"><?php the_title(); ?></a></h2>
     <?php endif; ?>
 
-    <?php if ($options['fields']['domain']): ?>
+    <?php if ($options['fields']['domain']->selected): ?>
       <div class="domain"><?php echo $blog->domain ?></div>
     <?php endif; ?>
 
-    <?php if ($options['fields']['blogname']): ?>
+    <?php if ($options['fields']['blogname']->selected): ?>
       <div class="blogname"><?php echo get_bloginfo('name'); ?></div>
     <?php endif; ?>
 
-    <?php if ($options['fields']['blogname_with_link']): ?>
+    <?php if ($options['fields']['blogname_with_link']->selected): ?>
       <div class="blogname">
         <a href="<?php echo get_bloginfo('url'); ?>"><?php echo get_bloginfo('name'); ?></a>
       </div>
     <?php endif; ?>
 
-    <?php if ($options['fields']['published_at']): ?>
+    <?php if ($options['fields']['published_at']->selected): ?>
       <div class="published_at">
         <time datetime="<?php echo get_the_date('Y-m-d\TH:i:sP'); ?>" itemprop="datePublished">
           <?php echo get_the_date(); ?>
@@ -46,13 +46,13 @@ foreach($options['blogs'] as $blog):
       </div>
     <?php endif; ?>
 
-    <?php if ($options['fields']['author_name']): ?>
+    <?php if ($options['fields']['author_name']->selected): ?>
       <div class="author">
         <?php the_author_posts_link() ?>
       </div>
     <?php endif; ?>
 
-    <?php if ($options['fields']['featured_image']): ?>
+    <?php if ($options['fields']['featured_image']->selected): ?>
     <?php
     the_post_thumbnail(
       'main-block',
@@ -64,7 +64,7 @@ foreach($options['blogs'] as $blog):
     ); ?>
     <?php endif; ?>
 
-    <?php if ($options['fields']['content']): ?>
+    <?php if ($options['fields']['content']->selected): ?>
       <div class="excerpt">
         <?php echo wp_trim_words(get_the_excerpt(), $options['excerpt']); ?>
         <?php //the_excerpt(); ?>
