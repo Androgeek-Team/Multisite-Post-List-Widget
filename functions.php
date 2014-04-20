@@ -71,6 +71,12 @@ class AG_PostListWidget extends WP_Widget
       $excerpt = 55;
     }
 
+    if (isset($instance[ 'display_blog_name_group' ])) {
+      $display_blog_name_group = $instance['display_blog_name_group'];
+    } else {
+      $display_blog_name_group = 0;
+    }
+
     if (isset($instance[ 'number_of_posts' ])) {
       $number_of_posts = $instance['number_of_posts'];
     } else {
@@ -107,6 +113,10 @@ class AG_PostListWidget extends WP_Widget
     $instance['title'] = (!empty($new_instance['title']))
       ? strip_tags($new_instance['title'])
       : '';
+
+    $instance['display_blog_name_group'] = (!empty($new_instance['display_blog_name_group']))
+      ? (int)strip_tags($new_instance['display_blog_name_group'])
+      : 0;
     $instance['excerpt'] = (!empty($new_instance['excerpt']))
       ? (int)strip_tags($new_instance['excerpt'])
       : 55;

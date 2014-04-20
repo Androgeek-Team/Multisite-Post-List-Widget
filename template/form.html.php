@@ -11,6 +11,20 @@
   <input class="widefat" id="<?php echo $this->get_field_id('excerpt'); ?>" name="<?php echo $this->get_field_name('excerpt'); ?>" type="text" value="<?php echo esc_attr($excerpt); ?>">
 </p>
 <p>
+  <label>
+    <input type='hidden'
+           value='0'
+           name='<?php echo $this->get_field_name('display_blog_name_group'); ?>'
+           />
+    <input name="<?php echo $this->get_field_name('display_blog_name_group'); ?>"
+           type="checkbox"
+           value="1"
+           <?php if ($display_blog_name_group): ?>checked='checked'<?php endif; ?>
+           />
+    <span>Display name of the blog on top</span>
+  </label>
+</p>
+<p>
   <label><?php _e('Enabled Blogs:'); ?></label>
   <?php foreach($blogs as $blog): ?>
     <label style="padding-left: 1em; display: block;">

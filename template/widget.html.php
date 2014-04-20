@@ -16,6 +16,12 @@ foreach($options['blogs'] as $blog):
       'posts_per_page' => $options['number_of_posts']
     )
   );
+?>
+<div class="agnp-site">
+  <?php if ($options['display_blog_name_group']): ?>
+  <h1><?php echo get_bloginfo('name') ?></h1>
+  <?php endif ?>
+<?php
   foreach($posts as $post):
     setup_postdata($post);
 ?>
@@ -74,5 +80,8 @@ foreach($options['blogs'] as $blog):
 <?php
     wp_reset_postdata();
   endforeach;
+?>
+  </div>
+<?php
 endforeach;
 switch_to_blog( $original_blog_id );
