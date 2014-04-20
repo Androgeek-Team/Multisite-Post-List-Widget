@@ -3,7 +3,7 @@
 }
 
 .agnp-line h2 {
-  padding: 0;
+  padding: 0.4em 0;
   margin: 0;
 }
 
@@ -12,10 +12,17 @@
 .agnp-line .published_at {
   font-size: .9em;
   font-style: italic;
+  padding: 0.4em 0;
 }
 
 .agnp-line img.wp-post-image {
   display: block;
   margin: 0 auto;
   max-width: 100%;
+}
+
+.agnp-line .excerpt {
+  padding: 0.7em 0;
+  line-height: 1.2em;
+  font-size: 0.95em;
 }
