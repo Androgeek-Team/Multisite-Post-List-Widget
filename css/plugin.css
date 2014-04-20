@@ -1,12 +1,21 @@
 .agnp-line {
-  padding: 10px 0;
+  padding: 0 0 10px 0;
 }
 
 .agnp-line h2 {
-  padding-bottom: 5px;
+  padding: 0;
+  margin: 0;
 }
 
-.agnp-line .domain {
+.agnp-line .domain,
+.agnp-line .blogname,
+.agnp-line .published_at {
   font-size: .9em;
   font-style: italic;
+}
+
+.agnp-line img.wp-post-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
 }
