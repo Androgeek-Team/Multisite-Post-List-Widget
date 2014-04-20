@@ -59,6 +59,7 @@ foreach($options['blogs'] as $blog):
     <?php endif; ?>
 
     <?php if ($options['fields']['featured_image']->selected): ?>
+    <a href="<?php the_permalink()?>" target="_blank">
     <?php
     the_post_thumbnail(
       'main-block',
@@ -68,12 +69,12 @@ foreach($options['blogs'] as $blog):
         'itemprop' => 'image'
       )
     ); ?>
+    </a>
     <?php endif; ?>
 
     <?php if ($options['fields']['content']->selected): ?>
       <div class="excerpt">
         <?php echo wp_trim_words(get_the_excerpt(), $options['excerpt']); ?>
-        <?php //the_excerpt(); ?>
       </div>
     <?php endif; ?>
   </div>
@@ -81,6 +82,7 @@ foreach($options['blogs'] as $blog):
     wp_reset_postdata();
   endforeach;
 ?>
+  <div style="clear: both"></div>
   </div>
 <?php
 endforeach;
