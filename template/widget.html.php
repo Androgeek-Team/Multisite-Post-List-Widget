@@ -1,5 +1,5 @@
-<?php if ( function_exists( 'sharing_display' ) ) remove_filter( 'the_content', 'sharing_display', 19 ); ?>
-<?php if ( function_exists( 'sharing_display' ) ) remove_filter( 'the_excerpt', 'sharing_display', 19 ); ?>
+<?php if ( function_exists( 'sharing_display' ) ) remove_filter( 'the_content', 'sharing_display', 15 ); ?>
+<?php if ( function_exists( 'sharing_display' ) ) remove_filter( 'the_excerpt', 'sharing_display', 15 ); ?>
 
 <?php $original_blog_id = get_current_blog_id(); ?>
 <?php global $post; ?>
