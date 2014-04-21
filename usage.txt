@@ -1,0 +1,52 @@
+After you installed and activated the plugin on plugins page it appears under Appearance > Widgets.
+
+Find Multisite Posts widget and drag into one of your sidebar.
+
+Here you can give it a title. After you named it you can specify the number of posts. Default 1. If you change to 3 then the widget lists 3 posts per selected blogs.
+
+The Excerpt Length specifies the word count in the displayed excerpt.
+
+If you check in "Display name of the blog on top" then the widget prints out each blog name before the post list.
+
+Now you cen see a list of blogs in the network. If you want to show posts from all block then leave checked in all.
+
+After you selected the blogs, you can specify what field needs to display. Default Title, Content (this is the excerpt) and Featured image.
+
+Hit the save button and you got an awesome post list across the whole network.
+
+For example on Androgeek we have 4 sites.
+
+ - Androgeek (the main page)
+ - Code Androgeek (Dev related content)
+ - Movie Androgeek (trailers and reviews)
+ - Test (plugin demo page)
+
+We put a post list on each site but we don't want to display sample posts from Test. We use this configuration on the main site:
+
+    Title: Androgeek
+    Number of Posts Per Site: 2
+    Excerpt Length: 55
+    [ ] Display name of the blog on top
+
+    Enabled Blogs:
+     [ ] androgeek.hu
+     [x] code.androgeek.hu
+     [x] movie.androgeek.hu
+     [ ] test.androgeek.hu
+
+    Fields:
+     [x] Title
+     [x] Content
+     [x] Featured Image
+     [ ] Domain Name
+     [ ] Blog Name
+     [x] Blog Name as Link
+     [ ] Author's Name
+     [ ] Published At
+
+What does it mean?
+
+We want a widget with title "Androgeek". We would like to displat 2 posts per blog.
+We leaved excerpt lenth on default (55) and we don't want to display name of the blogs on top of each section.
+We selected 2 blog (skip itseld and test). To display we enabled Title, Content, Featured Image.
+And additionaly we enabled Blog Name as Link to display the blog name for each posts.
